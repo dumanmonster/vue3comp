@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 import { useStore } from './stores/main';
+import { ref } from 'vue';
 
 
 const store = useStore()
+
 const handlePageChange = (newPage: 'Fav' | 'Stock' | 'Deals') => {
   store.changePage(newPage)
 }
-
 const changeFilter = (newFilter: string) =>{
   store.setFilter(newFilter);
 }
@@ -50,7 +51,7 @@ const changeFilter = (newFilter: string) =>{
       <p :class="['view-header__options-text', store.filter == 'auction' && 'view-header__options-text--active']" @click="changeFilter('auction')">Аукцион</p>
     </div>
     <div class="view-header__search">
-      <input class="view-header__search-input" type="text" />
+      <input class="view-header__search-input" type="text" v-model="store.searchQuery"/>
       <div class="view-header__search-icon">
         <svg
           width="20"

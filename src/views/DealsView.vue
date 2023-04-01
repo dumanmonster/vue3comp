@@ -6,12 +6,16 @@ const store = useStore()
 onMounted(() => {
   store.fetchItems();
 })
+const searchedItems = computed(() => store.searchedItems)
 const dealItems = computed(() => store.filteredDeals)
 
 </script>
 <template>
-  <div class="card-container">
+  <div v-if="store.searchQuery.length == 0"  class="card-container">
     <ProductCard v-for="item in dealItems" :product="item" :key="item.name" />
+  </div>
+  <div v-else class="card-container">
+    <ProductCard v-for="item in searchedItems" :product="item" :key="item.name" />
   </div>
 </template>
 
