@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { useStore } from '@/stores/main'
 import ProductCard from '@/components/ProductCard.vue'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 const store = useStore()
+onMounted(() => {
+  store.fetchItems();
+})
+const dealItems = computed(() => store.filteredDeals)
 
-const dealItems = computed(() => store.items.filter((item) => item.deal))
 </script>
 <template>
   <div class="card-container">

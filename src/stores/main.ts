@@ -1,7 +1,7 @@
 import type { Product } from '@/models/main'
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import ''
+
 export const useStore = defineStore({
   id: 'store',
   state: () => ({
@@ -21,6 +21,16 @@ export const useStore = defineStore({
         return state.items
       }
     },
+    filteredDeals(state) {
+      if (state.filter === 'auction') {
+        return state.deals.filter((item) => item.typeOfSell === 'Аукцион')
+      } else if (state.filter === 'direct') {
+        return state.deals.filter((item) => item.typeOfSell === 'Разовая продажа')
+      } else {
+        return state.deals
+      }
+    },
+
     searchedItems(state) {
       return state.searchQuery
         ? state.items.filter((item) =>
@@ -31,8 +41,10 @@ export const useStore = defineStore({
   },
   actions: {
     async fetchItems() {
-      const response = await axios.get('https://dumanmonster.github.io/testtask_json/')
-      this.items = response.data.products;
+      const response = await axios.get('http://localhost:3000/api/items')
+      const dealsResponse = await axios.get('http://localhost:3000/api/deals')
+      this.items = response.data
+      this.deals = dealsResponse.data
     },
     changePage(newPage: 'Stock' | 'Fav' | 'Deals') {
       this.page = newPage
@@ -45,9 +57,14 @@ export const useStore = defineStore({
     },
     toggleFavorite(item: Product) {
       item.favorite = !item.favorite
+      axios.put('http://localhost:3000/api/items', this.items)
     },
-    toggleDeal(item: Product) {
-      item.deal = !item.deal
+    async addDeal(item: Product) {
+      await axios.post('http://localhost:3000/api/deals', item)
+    },
+    async payDeal(item: Product) {
+      item.isPayed = true
+      await axios.put('http://localhost:3000/api/deals', this.deals)
     },
     setFilter(filter: string) {
       this.filter = filter

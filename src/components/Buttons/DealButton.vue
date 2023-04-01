@@ -9,12 +9,19 @@ const props = defineProps({
   }
 })
 
-const toggleDeal = (item: Product) => {
-  store.toggleDeal(item)
+const toggleDeal = () => {
+  store.addDeal(props.item)
+}
+
+const payDeal = () => {
+  store.payDeal(props.item)
 }
 </script>
 <template>
-  <div class="deal-button" @click="toggleDeal(item)">Добавить в сделки</div>
+  <div v-if="!item.dealId" class="deal-button" @click="toggleDeal">Добавить в сделки</div>
+  <div v-else :class="['pay-button', item.isPayed && 'pay-button--payed']" @click="payDeal">
+    {{ !item.isPayed ? 'Оплатить' : 'Оплачено' }}
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -32,5 +39,24 @@ const toggleDeal = (item: Product) => {
   font-size: 15px;
   font-family: 'Rubik', sans-serif;
   font-weight: 500;
+}
+.pay-button {
+  text-align: center;
+  cursor: pointer;
+  width: 212px;
+  height: 50px;
+  padding: 15px 25px;
+  background: #69c57f;
+  border-radius: 10px;
+  border: none;
+  color: #ffffff;
+  font-size: 15px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  &--payed {
+    color: #969dc3;
+    background: #ffffff;
+    border: 1px solid #e0e3ee;
+  }
 }
 </style>

@@ -1,4 +1,5 @@
 export interface Product {
+    dealId?: string;
     id: number;
     name: string;
     seller: string;
@@ -9,6 +10,6 @@ export interface Product {
     quantity: number;
     pricePerOne: number;
     favorite: boolean;
-    deal: boolean;
+    isPayed: boolean;
 }
 

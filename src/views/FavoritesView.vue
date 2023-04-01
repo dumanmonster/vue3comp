@@ -5,7 +5,7 @@ import { computed } from 'vue';
 
 const store = useStore()
 
-const favoriteItems = computed(() => store.items.filter(item => item.favorite))
+const favoriteItems = computed(() => store.filteredItems.filter(item => item.favorite == true))
 </script>
 <template>
   <div class="card-container">
