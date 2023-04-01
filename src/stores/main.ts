@@ -41,8 +41,8 @@ export const useStore = defineStore({
   },
   actions: {
     async fetchItems() {
-      const response = await axios.get('http://localhost:3000/api/items')
-      const dealsResponse = await axios.get('http://localhost:3000/api/deals')
+      const response = await axios.get('https://strawberry-custard-62556.herokuapp.com/api/items')
+      const dealsResponse = await axios.get('https://strawberry-custard-62556.herokuapp.com/api/deals')
       this.items = response.data
       this.deals = dealsResponse.data
     },
@@ -57,14 +57,14 @@ export const useStore = defineStore({
     },
     toggleFavorite(item: Product) {
       item.favorite = !item.favorite
-      axios.put('http://localhost:3000/api/items', this.items)
+      axios.put('https://strawberry-custard-62556.herokuapp.com/api/items', this.items)
     },
     async addDeal(item: Product) {
-      await axios.post('http://localhost:3000/api/deals', item)
+      await axios.post('https://strawberry-custard-62556.herokuapp.com/api/deals', item)
     },
     async payDeal(item: Product) {
       item.isPayed = true
-      await axios.put('http://localhost:3000/api/deals', this.deals)
+      await axios.put('https://strawberry-custard-62556.herokuapp.com/api/deals', this.deals)
     },
     setFilter(filter: string) {
       this.filter = filter
