@@ -2,7 +2,7 @@
 import type { Product } from '@/models/main'
 import LikeButton from './Buttons/LikeButton.vue'
 import { useStore } from '@/stores/main'
-import DealButton from './Buttons/DealButton.vue';
+import DealButton from './Buttons/DealButton.vue'
 
 const props = defineProps({
   product: {
@@ -11,8 +11,6 @@ const props = defineProps({
   }
 })
 const total = props.product.quantity * props.product.pricePerOne
-
-
 </script>
 <template>
   <div class="container">

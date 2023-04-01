@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useStore } from '@/stores/main'
 import ProductCard from '@/components/ProductCard.vue'
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const store = useStore()
 const searchedItems = computed(() => store.searchedItems)
-const favoriteItems = computed(() => store.filteredItems.filter(item => item.favorite == true))
+const favoriteItems = computed(() => store.filteredItems.filter((item) => item.favorite == true))
 </script>
 <template>
   <div v-if="store.searchQuery.length == 0" class="card-container">
