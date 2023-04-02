@@ -1,6 +1,7 @@
 import type { Product } from '@/models/main'
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import apiClient from '@/api'
 
 export const useStore = defineStore({
   id: 'store',
@@ -41,8 +42,8 @@ export const useStore = defineStore({
   },
   actions: {
     async fetchItems() {
-      const response = await axios.get('https://birdsbuildapi.herokuapp.com/api/items')
-      const dealsResponse = await axios.get('https://birdsbuildapi.herokuapp.com/api/deals')
+      const response = (await apiClient.get('/items'))
+      const dealsResponse = await apiClient.get('/deals')
       this.items = response.data
       this.deals = dealsResponse.data
     },
@@ -57,14 +58,14 @@ export const useStore = defineStore({
     },
     toggleFavorite(item: Product) {
       item.favorite = !item.favorite
-      axios.put('https://birdsbuildapi.herokuapp.com/api/items', this.items)
+      apiClient.put('/items', this.items)
     },
     async addDeal(item: Product) {
-      await axios.post('https://birdsbuildapi.herokuapp.com/api/deals', item)
+      await apiClient.post('/deals', item)
     },
     async payDeal(item: Product) {
       item.isPayed = true
-      await axios.put('https://birdsbuildapi.herokuapp.com/api/deals', this.deals)
+      await apiClient.put('/deals', this.deals)
     },
     setFilter(filter: string) {
       this.filter = filter
